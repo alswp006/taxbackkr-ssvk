@@ -6,6 +6,11 @@ import type {
   AppMeta,
 } from "@/lib/types";
 import { STORAGE_KEYS } from "@/lib/types";
+import {
+  computeAndPersistResult,
+  loadOrInitDeductions,
+  simulate,
+} from "@/services/taxService";
 
 /**
  * Packet 0005: 세금 계산 서비스 파사드 (taxService)
@@ -547,7 +552,7 @@ describe("세금 계산 서비스 파사드 (packet 0005)", () => {
           id: `year-${year}`,
           taxYear: year,
           incomeType: "employee",
-          annualSalary: 50000000 + year * 1000000,
+          annualSalary: 50000000 + (year - 2025) * 1000000,
           freelanceIncome: 0,
           dependents: 1,
           createdAt: computedAt,
@@ -580,64 +585,3 @@ describe("세금 계산 서비스 파사드 (packet 0005)", () => {
     });
   });
 });
-
-// ============================================================================
-// Mock Function Stubs (will be implemented in taxService.ts)
-// These are placeholder declarations for type checking during TDD red phase
-// ============================================================================
-
-/**
- * Load profile by ID and calculate tax, then persist result + meta.lastResultByYear
- * Returns null if profile not found, otherwise returns TaxResult
- *
- * Implementation will:
- * 1. loadProfile(profileId) → TaxProfile | null
- * 2. If null, return null
- * 3. loadOrInitDeductions(profileId) → DeductionInput
- * 4. calcTax(profile, deductions, computedAt) → TaxResult
- * 5. saveResult(profileId, result)
- * 6. loadMeta() → AppMeta | null
- * 7. Update meta.lastResultByYear[taxYear] = result
- * 8. saveMeta(meta)
- * 9. Return result
- */
-async function computeAndPersistResult(
-  profileId: string,
-  computedAt: number
-): Promise<TaxResult | null> {
-  // TDD red phase — this will fail until src/services/taxService.ts is implemented
-  throw new Error("computeAndPersistResult not yet implemented");
-}
-
-/**
- * Load deductions from storage, or return zero-initialized defaults
- *
- * Implementation will:
- * 1. loadDeductions(profileId) → DeductionInput | null
- * 2. If null, return { creditCard: 0, medical: 0, education: 0, irp: 0, insurance: 0 }
- * 3. Otherwise return loaded value
- */
-async function loadOrInitDeductions(
-  profileId: string
-): Promise<DeductionInput> {
-  // TDD red phase — this will fail until src/services/taxService.ts is implemented
-  throw new Error("loadOrInitDeductions not yet implemented");
-}
-
-/**
- * Simulate tax calculation with given profile and deductions
- * Combines calcTax() + calcDeductionBreakdown()
- *
- * Implementation will:
- * 1. calcTax(profile, deductions, computedAt) → TaxResult (with deductionBreakdown filled in by calcTax)
- * 2. Return result (calcTax already includes deductionBreakdown)
- * Note: calcTax already calls calcDeductionBreakdown internally, so this is mostly a pass-through
- */
-async function simulate(
-  profile: TaxProfile,
-  deductions: DeductionInput,
-  computedAt: number
-): Promise<TaxResult | null> {
-  // TDD red phase — this will fail until src/services/taxService.ts is implemented
-  throw new Error("simulate not yet implemented");
-}
