@@ -42,7 +42,7 @@ export default function Home() {
       {/* 시각 앵커: 헤드라인 + 카드 내 진입 버튼(부유 금지, display="block" 전체폭).
           데이터 앱이면 value를 <Amount typography="t1" />(핵심 숫자)로 교체하라. */}
       <SummaryHero
-        label="TaxBackKR"
+        label="예상 환급액 계산"
         value={<Paragraph.Text typography="t2">연말정산·종합소득세 환급액을 30초 안에 시뮬레이션하고, 절세 팁을 리워드 광고 뒤에 공개하는 세금 환급 계산기</Paragraph.Text>}
         caption="로그인 없이 바로 쓸 수 있어요"
         action={

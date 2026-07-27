@@ -162,3 +162,4 @@ CRITICAL: Before creating any new function, type, or component, check the list a
 - 0005: 세금 계산 서비스 파사드 (files: src/services/taxService.ts)
 - 0006: 세션·리워드 서비스 (files: src/services/sessionService.ts)
 - 0007: 소득 입력 페이지 /input (files: src/pages/Input.tsx)
+- 0008: 환급 결과 페이지 /result (리워드 게이트+배너) (files: src/pages/Result.tsx)
