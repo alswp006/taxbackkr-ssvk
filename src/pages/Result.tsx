@@ -12,18 +12,10 @@ import { CountUp } from "@/components/CountUp";
 import { Card } from "@/components/Card";
 import { AdSlot } from "@/components/AdSlot";
 import { EmptyState, LoadingState } from "@/components/StateView";
-import { loadProfile, loadDeductions, saveResult, loadMeta, saveMeta } from "@/lib/storage";
-import { calcTax } from "@/lib/taxEngine";
-import type { DeductionInput, RouteState, TaxResult } from "@/lib/types";
+import { loadProfile } from "@/lib/storage";
+import { computeAndPersistResult } from "@/services/taxService";
+import type { RouteState, TaxResult } from "@/lib/types";
 import { formatNumber } from "@/lib/utils";
-
-const ZERO_DEDUCTIONS: DeductionInput = {
-  creditCard: 0,
-  medical: 0,
-  education: 0,
-  irp: 0,
-  insurance: 0,
-};
 
 const REWARD_SLOT_ID = import.meta.env.VITE_TOSS_AD_SLOT_ID ?? "result-unlock";
 
@@ -48,17 +40,17 @@ export default function Result() {
   const [unlocked, setUnlocked] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
 
-  // 마운트 시: 결과 계산 + 스냅샷 저장(F3-AC8)
+  // 마운트 시: 계산 파사드(0005)를 통해 결과를 계산·영속화(F3-AC8)
   useEffect(() => {
-    if (!profile) return;
-    const deductions = loadDeductions(profile.id) ?? ZERO_DEDUCTIONS;
-    const computed = calcTax(profile, deductions, 0);
-    saveResult(profile.id, computed);
-    const meta = loadMeta() ?? { onboardingSeen: false, lastResultByYear: {} };
-    meta.lastResultByYear[profile.taxYear] = computed;
-    saveMeta(meta);
-    setResult(computed);
-  }, [profile]);
+    if (!profileId) return;
+    let cancelled = false;
+    computeAndPersistResult(profileId, Date.now()).then((computed) => {
+      if (!cancelled && computed) setResult(computed);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [profileId]);
 
   // 리워드 광고 프리로드. 로드 실패(앱인토스 WebView 밖 등)는 버튼을 영구 비활성으로
   // 남기지 않고 게이트를 건너뛴다(TossRewardAd 컴포넌트와 동일한 정책).
