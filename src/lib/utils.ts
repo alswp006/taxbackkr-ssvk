@@ -9,3 +9,7 @@ export function formatNumber(n: number): string {
 export function formatCurrency(n: number, currency = 'KRW'): string {
   return new Intl.NumberFormat('ko-KR', { style: 'currency', currency }).format(n);
 }
+
+export function generateId(): string {
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+}

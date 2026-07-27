@@ -67,6 +67,9 @@ export type RouteState = {
   "/checklist": undefined;
 };
 
+/** 앱은 단일 활성 프로필만 유지한다([Assumptions] #7) — 프로필 저장/조회는 이 고정 id로 스코프됨 */
+export const CURRENT_PROFILE_ID = "current";
+
 export const STORAGE_KEYS = {
   profile: "taxback:profile:v1",
   deductions: "taxback:deductions:v1",
