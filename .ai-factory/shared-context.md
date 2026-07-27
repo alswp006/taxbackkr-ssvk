@@ -102,6 +102,7 @@ export const STORAGE_KEYS = {
     TossRewardAd.tsx
   hooks/
   lib/
+    derive.ts
     storage.ts
     taxEngine.ts
     taxTables.ts
@@ -120,6 +121,7 @@ export const STORAGE_KEYS = {
   vite-env.d.ts
 
 ### Exports (src/lib/)
+- derive.ts: export interface ComparisonResult; export interface SeasonBannerState; export function buildChecklistState( deductions: DeductionInput, taxYear: number ): ChecklistState; export function compareResults(meta: Record<number, TaxResult>): ComparisonResult; export function computeSeasonBanner(month: number): SeasonBannerState
 - storage.ts: export function saveProfile(profile: TaxProfile): WriteResult; export function loadProfile(profileId: string): TaxProfile | null; export function saveDeductions(profileId: string, deductions: DeductionInput): WriteResult; export function loadDeductions(profileId: string): DeductionInput | null; export function saveResult(profileId: string, result: TaxResult): WriteResult; export function loadResult(profileId: string): TaxResult | null; export function saveMeta(meta: AppMeta): WriteResult; export function loadMeta(): AppMeta | null
 - taxEngine.ts: export function calcTax( profile: TaxProfile, deductions: DeductionInput, computedAt: number ): TaxResult; export function calcDeductionBreakdown( profile: TaxProfile, deductions: DeductionInput ): DeductionBreakdownItem[]; export function judgeComprehensiveFiling(profile: TaxProfile): boolean
 - taxTables.ts: export interface TaxBracket; export const TAX_BRACKETS_BY_YEAR: Record<number, TaxBracket[]> =; export const DEFAULT_TAX_BRACKETS = STANDARD_BRACKETS; export interface EmploymentDeductionBracket; export const EMPLOYMENT_INCOME_DEDUCTION_TABLE: EmploymentDeductionBracket[] = [; export const FREELANCE_EXPENSE_RATE = 0.6; export const BASIC_DEDUCTION_PER_PERSON = 1_500_000; export const WITHHOLDING_BUFFER = 1.1
@@ -143,6 +145,7 @@ export const STORAGE_KEYS = {
 - TossRewardAd.tsx: TossRewardAd
 
 ### Module Dependencies (import graph)
+  lib/derive.ts → imports: lib/types
   lib/taxEngine.ts → imports: lib/types, lib/taxTables
   lib/taxTables.ts → imports: lib/types
 CRITICAL: Before creating any new function, type, or component, check the list above. If something similar exists, import and use it.
@@ -152,3 +155,4 @@ CRITICAL: Before creating any new function, type, or component, check the list a
 - 0002: localStorage CRUD 헬퍼 (files: src/lib/storage.ts)
 - 0003: 세금 계산 엔진 + 세율표 상수 (files: src/lib/taxEngine.ts, src/lib/taxTables.ts)
 - 0006: 세션·리워드 서비스 (files: src/services/sessionService.ts)
+- 0004: 파생 상태 헬퍼 (체크리스트·연도비교·시즌배너) (files: src/lib/derive.ts)
