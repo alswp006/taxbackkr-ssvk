@@ -103,12 +103,16 @@ export const STORAGE_KEYS = {
   hooks/
   lib/
     storage.ts
+    taxEngine.ts
+    taxTables.ts
     types.ts
     utils.ts
   main.tsx
   pages/
     Home.tsx
     __TdsGallery.tsx
+  services/
+    sessionService.ts
   styles/
     globals.css
     reward-ad.css
@@ -116,7 +120,9 @@ export const STORAGE_KEYS = {
   vite-env.d.ts
 
 ### Exports (src/lib/)
-- storage.ts: export function getItem<T>(key: string): T | null; export function setItem<T>(key: string, value: T): void; export function removeItem(key: string): void
+- storage.ts: export function saveProfile(profile: TaxProfile): WriteResult; export function loadProfile(profileId: string): TaxProfile | null; export function saveDeductions(profileId: string, deductions: DeductionInput): WriteResult; export function loadDeductions(profileId: string): DeductionInput | null; export function saveResult(profileId: string, result: TaxResult): WriteResult; export function loadResult(profileId: string): TaxResult | null; export function saveMeta(meta: AppMeta): WriteResult; export function loadMeta(): AppMeta | null
+- taxEngine.ts: export function calcTax( profile: TaxProfile, deductions: DeductionInput, computedAt: number ): TaxResult; export function calcDeductionBreakdown( profile: TaxProfile, deductions: DeductionInput ): DeductionBreakdownItem[]; export function judgeComprehensiveFiling(profile: TaxProfile): boolean
+- taxTables.ts: export interface TaxBracket; export const TAX_BRACKETS_BY_YEAR: Record<number, TaxBracket[]> =; export const DEFAULT_TAX_BRACKETS = STANDARD_BRACKETS; export interface EmploymentDeductionBracket; export const EMPLOYMENT_INCOME_DEDUCTION_TABLE: EmploymentDeductionBracket[] = [; export const FREELANCE_EXPENSE_RATE = 0.6; export const BASIC_DEDUCTION_PER_PERSON = 1_500_000; export const WITHHOLDING_BUFFER = 1.1
 - types.ts: export type IncomeType = "employee" | "freelancer" | "multi"; export interface TaxProfile; export interface DeductionInput; export interface DeductionBreakdownItem; export interface TaxResult; export type ChecklistItemKey = "irp" | "pension" | "medical" | "creditCardRatio" | "insurance"; export interface ChecklistItem; export interface ChecklistState
 - utils.ts: export function cn(...classes: (string | boolean | undefined | null)[]): string; export function formatNumber(n: number): string; export function formatCurrency(n: number, currency = 'KRW'): string
 
@@ -135,9 +141,14 @@ export const STORAGE_KEYS = {
 - SummaryHero.tsx: SummaryHero
 - TossPurchase.tsx: TossPurchase
 - TossRewardAd.tsx: TossRewardAd
+
+### Module Dependencies (import graph)
+  lib/taxEngine.ts → imports: lib/types, lib/taxTables
+  lib/taxTables.ts → imports: lib/types
 CRITICAL: Before creating any new function, type, or component, check the list above. If something similar exists, import and use it.
 
 ## Already Implemented (do NOT duplicate or overwrite)
 - 0001: TypeScript 타입 + RouteState 계약 정의 (files: src/lib/types.ts)
 - 0002: localStorage CRUD 헬퍼 (files: src/lib/storage.ts)
 - 0003: 세금 계산 엔진 + 세율표 상수 (files: src/lib/taxEngine.ts, src/lib/taxTables.ts)
+- 0006: 세션·리워드 서비스 (files: src/services/sessionService.ts)
