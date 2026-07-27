@@ -87,7 +87,7 @@ describe("앱셸 라우팅 + Provider + 스캐폴드 계약 확정", () => {
       result.unmount();
     });
 
-    it("AC-2: unimplemented routes (/simulate, /filing, /checklist) render a ScreenScaffold placeholder labeled with the route's label", async () => {
+    it("AC-2: previously-placeholder routes (/simulate, /filing, /checklist) now render real ScreenScaffold pages, not the placeholder", async () => {
       const App = (await import("@/App")).default;
       const { ROUTES } = await import("@/router");
 
@@ -99,8 +99,9 @@ describe("앱셸 라우팅 + Provider + 스캐폴드 계약 확정", () => {
           initialEntries: [path],
         });
 
-        // Placeholder shows the route's label somewhere on screen
-        expect(screen.getByText(route!.label).textContent).toBe(route!.label);
+        // These routes are now implemented (F4/F5/F6) — the generic placeholder
+        // copy must no longer appear.
+        expect(screen.queryByText("준비 중인 화면이에요")).toBeNull();
 
         // Must be wrapped in ScreenScaffold/PageShell (minHeight: 100dvh), not a raw <div>
         const shellPresent = Array.from(container.querySelectorAll("div")).some(

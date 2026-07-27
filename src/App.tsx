@@ -9,6 +9,9 @@ import { EmptyState } from './components/StateView';
 import Home from './pages/Home';
 import Input from './pages/Input';
 import Result from './pages/Result';
+import Simulate from './pages/Simulate';
+import Filing from './pages/Filing';
+import Checklist from './pages/Checklist';
 
 // 실제 구현된 페이지만 매핑. 미구현 경로는 아래 Placeholder로 방어 배선해
 // 단일 화면 결함이 전체 빌드를 무너뜨리지 않게 한다(플레이스홀더 골격은 계약과 동일).
@@ -16,6 +19,9 @@ const PAGES: Partial<Record<string, ComponentType>> = {
   '/': Home,
   '/input': Input,
   '/result': Result,
+  '/simulate': Simulate,
+  '/filing': Filing,
+  '/checklist': Checklist,
 };
 
 /** 미구현 라우트용 최소 플레이스홀더 — ScreenScaffold 골격 + 라우트 이름 헤더. */
