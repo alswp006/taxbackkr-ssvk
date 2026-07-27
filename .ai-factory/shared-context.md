@@ -72,6 +72,9 @@ export type RouteState = {
   "/checklist": undefined;
 };
 
+/** 앱은 단일 활성 프로필만 유지한다([Assumptions] #7) — 프로필 저장/조회는 이 고정 id로 스코프됨 */
+export const CURRENT_PROFILE_ID = "current";
+
 export const STORAGE_KEYS = {
   profile: "taxback:profile:v1",
   deductions: "taxback:deductions:v1",
@@ -114,6 +117,7 @@ export const STORAGE_KEYS = {
     __TdsGallery.tsx
   services/
     sessionService.ts
+    taxService.ts
   styles/
     globals.css
     reward-ad.css
@@ -126,7 +130,7 @@ export const STORAGE_KEYS = {
 - taxEngine.ts: export function calcTax( profile: TaxProfile, deductions: DeductionInput, computedAt: number ): TaxResult; export function calcDeductionBreakdown( profile: TaxProfile, deductions: DeductionInput ): DeductionBreakdownItem[]; export function judgeComprehensiveFiling(profile: TaxProfile): boolean
 - taxTables.ts: export interface TaxBracket; export const TAX_BRACKETS_BY_YEAR: Record<number, TaxBracket[]> =; export const DEFAULT_TAX_BRACKETS = STANDARD_BRACKETS; export interface EmploymentDeductionBracket; export const EMPLOYMENT_INCOME_DEDUCTION_TABLE: EmploymentDeductionBracket[] = [; export const FREELANCE_EXPENSE_RATE = 0.6; export const BASIC_DEDUCTION_PER_PERSON = 1_500_000; export const WITHHOLDING_BUFFER = 1.1
 - types.ts: export type IncomeType = "employee" | "freelancer" | "multi"; export interface TaxProfile; export interface DeductionInput; export interface DeductionBreakdownItem; export interface TaxResult; export type ChecklistItemKey = "irp" | "pension" | "medical" | "creditCardRatio" | "insurance"; export interface ChecklistItem; export interface ChecklistState
-- utils.ts: export function cn(...classes: (string | boolean | undefined | null)[]): string; export function formatNumber(n: number): string; export function formatCurrency(n: number, currency = 'KRW'): string
+- utils.ts: export function cn(...classes: (string | boolean | undefined | null)[]): string; export function formatNumber(n: number): string; export function formatCurrency(n: number, currency = 'KRW'): string; export function generateId(): string
 
 ### Components (src/components/)
 - AdSlot.tsx: AdSlot
@@ -154,5 +158,6 @@ CRITICAL: Before creating any new function, type, or component, check the list a
 - 0001: TypeScript 타입 + RouteState 계약 정의 (files: src/lib/types.ts)
 - 0002: localStorage CRUD 헬퍼 (files: src/lib/storage.ts)
 - 0003: 세금 계산 엔진 + 세율표 상수 (files: src/lib/taxEngine.ts, src/lib/taxTables.ts)
-- 0006: 세션·리워드 서비스 (files: src/services/sessionService.ts)
 - 0004: 파생 상태 헬퍼 (체크리스트·연도비교·시즌배너) (files: src/lib/derive.ts)
+- 0005: 세금 계산 서비스 파사드 (files: src/services/taxService.ts)
+- 0006: 세션·리워드 서비스 (files: src/services/sessionService.ts)

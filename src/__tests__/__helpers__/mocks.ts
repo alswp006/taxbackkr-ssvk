@@ -140,16 +140,34 @@ export function mockTds() {
     BottomCTA: ({ children }: any) =>
       React.createElement("div", { "data-slot": "bottom-cta" }, children),
 
+    // FixedBottomCTA is itself a <button> (see BottomCTA.tsx SubmitFooter wrapper).
+    FixedBottomCTA: Object.assign(
+      ({ children, onClick, disabled }: any) =>
+        React.createElement("button", { onClick, disabled }, children),
+      {
+        Double: ({ primary, secondary }: any) =>
+          React.createElement(
+            "div",
+            null,
+            React.createElement("button", { onClick: primary?.onClick }, primary?.label),
+            React.createElement("button", { onClick: secondary?.onClick }, secondary?.label),
+          ),
+      },
+    ),
+
     BottomSheet: Object.assign(
       ({ children, open }: any) =>
         open ? React.createElement("div", { role: "dialog" }, children) : null,
       { Header: ({ children }: any) => React.createElement("div", null, children) },
     ),
 
-    Chip: ({ children, selected, onClick }: any) =>
+    // Chip is a group container; ChipItem is the actual selectable button (real TDS shape).
+    Chip: ({ children, ...props }: any) => React.createElement("div", { ...props }, children),
+
+    ChipItem: ({ children, selected, onClick, ...props }: any) =>
       React.createElement(
         "button",
-        { role: "button", "aria-pressed": selected, onClick },
+        { role: "button", "aria-pressed": !!selected, onClick, ...props },
         children,
       ),
 
