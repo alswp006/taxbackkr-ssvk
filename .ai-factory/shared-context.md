@@ -163,3 +163,4 @@ CRITICAL: Before creating any new function, type, or component, check the list a
 - 0006: 세션·리워드 서비스 (files: src/services/sessionService.ts)
 - 0007: 소득 입력 페이지 /input (files: src/pages/Input.tsx)
 - 0008: 환급 결과 페이지 /result (리워드 게이트+배너) (files: src/pages/Result.tsx)
+- heal-1-01: 앱셸 라우팅 + Provider + 스캐폴드 계약 확정 (files: src/App.tsx, src/router.tsx, src/app/AppProviders.tsx, src/app/tabs.ts, src/main.tsx)
