@@ -1,16 +1,43 @@
-export function getItem<T>(key: string): T | null {
-  try {
-    const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : null;
-  } catch {
-    return null;
-  }
+import type { TaxProfile, DeductionInput, TaxResult, AppMeta, ChecklistState } from './types';
+
+type WriteResult = { ok: true } | { ok: false; reason: 'quota' };
+
+export function saveProfile(profile: TaxProfile): WriteResult {
+  throw new Error('not implemented');
 }
 
-export function setItem<T>(key: string, value: T): void {
-  localStorage.setItem(key, JSON.stringify(value));
+export function loadProfile(profileId: string): TaxProfile | null {
+  throw new Error('not implemented');
 }
 
-export function removeItem(key: string): void {
-  localStorage.removeItem(key);
+export function saveDeductions(profileId: string, deductions: DeductionInput): WriteResult {
+  throw new Error('not implemented');
+}
+
+export function loadDeductions(profileId: string): DeductionInput | null {
+  throw new Error('not implemented');
+}
+
+export function saveResult(profileId: string, result: TaxResult): WriteResult {
+  throw new Error('not implemented');
+}
+
+export function loadResult(profileId: string): TaxResult | null {
+  throw new Error('not implemented');
+}
+
+export function saveMeta(meta: AppMeta): WriteResult {
+  throw new Error('not implemented');
+}
+
+export function loadMeta(): AppMeta | null {
+  throw new Error('not implemented');
+}
+
+export function saveChecklist(checklist: ChecklistState): WriteResult {
+  throw new Error('not implemented');
+}
+
+export function loadChecklist(): ChecklistState | null {
+  throw new Error('not implemented');
 }
