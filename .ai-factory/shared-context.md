@@ -161,3 +161,4 @@ CRITICAL: Before creating any new function, type, or component, check the list a
 - 0004: 파생 상태 헬퍼 (체크리스트·연도비교·시즌배너) (files: src/lib/derive.ts)
 - 0005: 세금 계산 서비스 파사드 (files: src/services/taxService.ts)
 - 0006: 세션·리워드 서비스 (files: src/services/sessionService.ts)
+- 0007: 소득 입력 페이지 /input (files: src/pages/Input.tsx)
