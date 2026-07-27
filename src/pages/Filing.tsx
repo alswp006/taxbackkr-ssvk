@@ -4,6 +4,8 @@ import { Top, Paragraph, Spacing, Badge, ListRow, Button } from "@toss/tds-mobil
 import { ScreenScaffold } from "@/components/ScreenScaffold";
 import { Card } from "@/components/Card";
 import { EmptyState } from "@/components/StateView";
+import { FloatingTabBar } from "@/components/FloatingTabBar";
+import { TABS } from "@/app/tabs";
 import { loadProfile } from "@/lib/storage";
 import { judgeComprehensiveFiling } from "@/lib/taxEngine";
 import { CURRENT_PROFILE_ID } from "@/lib/types";
@@ -16,7 +18,10 @@ export default function Filing() {
 
   if (!profile) {
     return (
-      <ScreenScaffold top={<Top title={<Top.TitleParagraph>종합소득세 신고</Top.TitleParagraph>} />}>
+      <ScreenScaffold
+        top={<Top title={<Top.TitleParagraph>종합소득세 신고</Top.TitleParagraph>} />}
+        bottom={<FloatingTabBar items={TABS} />}
+      >
         <EmptyState
           title="소득 정보를 먼저 입력해주세요"
           action={
@@ -32,7 +37,10 @@ export default function Filing() {
   const isTarget = judgeComprehensiveFiling(profile);
 
   return (
-    <ScreenScaffold top={<Top title={<Top.TitleParagraph>종합소득세 신고</Top.TitleParagraph>} />}>
+    <ScreenScaffold
+      top={<Top title={<Top.TitleParagraph>종합소득세 신고</Top.TitleParagraph>} />}
+      bottom={<FloatingTabBar items={TABS} />}
+    >
       <Card testId="filing-verdict-card">
         <Badge size="medium" variant="fill" color={isTarget ? "red" : "blue"}>
           {isTarget ? "신고 대상" : "신고 대상 아님"}
@@ -58,7 +66,8 @@ export default function Filing() {
         </>
       )}
 
-      <Spacing size={24} />
+      {/* 하단 FloatingTabBar와 겹치지 않도록 여백 확보 */}
+      <Spacing size={80} />
     </ScreenScaffold>
   );
 }

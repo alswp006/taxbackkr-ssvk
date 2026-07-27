@@ -7,6 +7,8 @@ import { CountUp } from "@/components/CountUp";
 import { Card } from "@/components/Card";
 import { MiniBar } from "@/components/MiniBar";
 import { EmptyState } from "@/components/StateView";
+import { FloatingTabBar } from "@/components/FloatingTabBar";
+import { TABS } from "@/app/tabs";
 import { loadProfile, loadDeductions, saveDeductions } from "@/lib/storage";
 import { calcTax } from "@/lib/taxEngine";
 import { DEDUCTION_LIMITS, DEDUCTION_LABELS, DEDUCTION_KEYS } from "@/lib/taxTables";
@@ -59,7 +61,10 @@ export default function Simulate() {
 
   if (!profile) {
     return (
-      <ScreenScaffold top={<Top title={<Top.TitleParagraph>공제 시뮬레이션</Top.TitleParagraph>} />}>
+      <ScreenScaffold
+        top={<Top title={<Top.TitleParagraph>공제 시뮬레이션</Top.TitleParagraph>} />}
+        bottom={<FloatingTabBar items={TABS} />}
+      >
         <EmptyState
           title="소득 정보를 먼저 입력해주세요"
           action={
@@ -76,7 +81,10 @@ export default function Simulate() {
   const refund = result?.refund ?? 0;
 
   return (
-    <ScreenScaffold top={<Top title={<Top.TitleParagraph>공제 시뮬레이션</Top.TitleParagraph>} />}>
+    <ScreenScaffold
+      top={<Top title={<Top.TitleParagraph>공제 시뮬레이션</Top.TitleParagraph>} />}
+      bottom={<FloatingTabBar items={TABS} />}
+    >
       <SummaryHero
         testId="simulate-hero"
         label={refund >= 0 ? "예상 환급액" : "추가 납부 예상"}
@@ -137,6 +145,9 @@ export default function Simulate() {
         position="bottom"
         onClose={() => setToastOpen(false)}
       />
+
+      {/* 하단 FloatingTabBar와 겹치지 않도록 여백 확보 */}
+      <Spacing size={80} />
     </ScreenScaffold>
   );
 }

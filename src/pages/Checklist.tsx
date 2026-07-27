@@ -6,6 +6,8 @@ import { SummaryHero } from "@/components/SummaryHero";
 import { CountUp } from "@/components/CountUp";
 import { MiniBar } from "@/components/MiniBar";
 import { EmptyState } from "@/components/StateView";
+import { FloatingTabBar } from "@/components/FloatingTabBar";
+import { TABS } from "@/app/tabs";
 import { loadProfile, loadDeductions } from "@/lib/storage";
 import { buildChecklistState } from "@/lib/derive";
 import { CURRENT_PROFILE_ID, type ChecklistItemKey, type DeductionInput } from "@/lib/types";
@@ -30,7 +32,10 @@ export default function Checklist() {
 
   if (!profile || !deductions) {
     return (
-      <ScreenScaffold top={<Top title={<Top.TitleParagraph>절세 체크리스트</Top.TitleParagraph>} />}>
+      <ScreenScaffold
+        top={<Top title={<Top.TitleParagraph>절세 체크리스트</Top.TitleParagraph>} />}
+        bottom={<FloatingTabBar items={TABS} />}
+      >
         <EmptyState title="공제 항목을 입력하면 달성도를 확인할 수 있어요" />
       </ScreenScaffold>
     );
@@ -40,7 +45,10 @@ export default function Checklist() {
   const achievedPct = Math.round(checklist.achievedRate * 100);
 
   return (
-    <ScreenScaffold top={<Top title={<Top.TitleParagraph>절세 체크리스트</Top.TitleParagraph>} />}>
+    <ScreenScaffold
+      top={<Top title={<Top.TitleParagraph>절세 체크리스트</Top.TitleParagraph>} />}
+      bottom={<FloatingTabBar items={TABS} />}
+    >
       <SummaryHero
         testId="achieve-hero"
         label="공제 달성률"
@@ -81,7 +89,8 @@ export default function Checklist() {
         </div>
       ))}
 
-      <Spacing size={24} />
+      {/* 하단 FloatingTabBar와 겹치지 않도록 여백 확보 */}
+      <Spacing size={80} />
     </ScreenScaffold>
   );
 }

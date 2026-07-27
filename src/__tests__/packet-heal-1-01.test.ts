@@ -172,6 +172,19 @@ describe("앱셸 라우팅 + Provider + 스캐폴드 계약 확정", () => {
         expect(btn.style.minHeight).toBe("44px");
       });
     });
+
+    it("AC-3[P0]: every TABS destination actually renders the tab bar when mounted through App (no dead-end screens)", async () => {
+      const App = (await import("@/App")).default;
+      const { TABS } = await import("@/app/tabs");
+
+      for (const tab of TABS as TabItemLike[]) {
+        const { unmount } = renderWithRouter(React.createElement(App), {
+          initialEntries: [tab.path],
+        });
+        expect(screen.getAllByRole("tab").length).toBe(TABS.length);
+        unmount();
+      }
+    });
   });
 
   // ==========================================================================

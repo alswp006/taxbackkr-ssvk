@@ -44,9 +44,13 @@ export default function Result() {
   useEffect(() => {
     if (!profileId) return;
     let cancelled = false;
-    computeAndPersistResult(profileId, Date.now()).then((computed) => {
-      if (!cancelled && computed) setResult(computed);
-    });
+    computeAndPersistResult(profileId, Date.now())
+      .then((computed) => {
+        if (!cancelled && computed) setResult(computed);
+      })
+      .catch(() => {
+        /* 계산 실패 시 로딩 상태로 남겨 흰 화면/throw 방지 */
+      });
     return () => {
       cancelled = true;
     };
