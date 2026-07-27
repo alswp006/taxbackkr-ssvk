@@ -140,3 +140,4 @@ CRITICAL: Before creating any new function, type, or component, check the list a
 ## Already Implemented (do NOT duplicate or overwrite)
 - 0001: TypeScript 타입 + RouteState 계약 정의 (files: src/lib/types.ts)
 - 0002: localStorage CRUD 헬퍼 (files: src/lib/storage.ts)
+- 0003: 세금 계산 엔진 + 세율표 상수 (files: src/lib/taxEngine.ts, src/lib/taxTables.ts)
