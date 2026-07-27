@@ -83,6 +83,8 @@ export default function Input() {
       bottom={<SubmitFooter label="환급액 계산" onClick={handleCalc} />}
     >
       <Paragraph.Text typography="t4">소득 유형을 골라주세요</Paragraph.Text>
+      <Spacing size={4} />
+      <Paragraph.Text typography="st13">자영업·사업소득도 프리랜서를 선택해요</Paragraph.Text>
       <Spacing size={12} />
       <Chip>
         <ChipItem
@@ -113,8 +115,8 @@ export default function Input() {
       <TextField
         variant="box"
         label="연봉(총급여)"
-        placeholder="예: 5,000만 원"
-        help={salaryError ?? "원 단위로 입력해요"}
+        placeholder="예: 50000000"
+        help={salaryError ?? "만 원 단위 말고 전체 금액을 숫자로 입력해요 (5천만 원 → 50000000)"}
         hasError={!!salaryError}
         inputMode="numeric"
         value={salary}
@@ -132,7 +134,8 @@ export default function Input() {
           <TextField
             variant="box"
             label="프리랜서 수입"
-            placeholder="예: 800만 원"
+            placeholder="예: 8000000"
+            help="전체 금액을 숫자로 입력해요 (800만 원 → 8000000)"
             inputMode="numeric"
             value={freelanceIncome}
             onChange={(e) => setFreelanceIncome(e.target.value)}
@@ -147,7 +150,8 @@ export default function Input() {
       <TextField
         variant="box"
         label="부양가족 수"
-        placeholder="예: 2"
+        placeholder="부양가족 수 (예: 2명)"
+        help="본인 제외, 배우자·자녀 등 부양가족 인원이에요"
         inputMode="numeric"
         value={dependents}
         onChange={(e) => setDependents(e.target.value)}
